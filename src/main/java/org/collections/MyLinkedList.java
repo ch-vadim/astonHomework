@@ -331,6 +331,26 @@ public class MyLinkedList<E> implements Deque<E> {
         size = 0;
     }
 
+    public void sort(Comparator<? super E> comparator) {
+        boolean flag = true;
+        E[] elements = (E[]) this.toArray();
+        while (flag) {
+            flag = false;
+            for (int i = 0; i< size-1; i++) {
+                if (comparator.compare(elements[i], elements[i+1]) > 0) {
+                    E temp = elements[i];
+                    elements[i] = elements[i+1];
+                    elements[i+1] = temp;
+                    flag = true;
+                }
+            }
+        }
+    }
+
+    public static <E extends Comparable<? super E>> void sort(MyLinkedList<E> list) {
+        list.sort(Comparator.naturalOrder());
+    }
+
     private static class Node<E> {
         E value;
         Node<E> prev;
