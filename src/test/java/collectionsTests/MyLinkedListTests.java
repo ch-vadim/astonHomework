@@ -51,4 +51,17 @@ public class MyLinkedListTests {
         Assert.assertEquals(a, list.pollLast());
 
     }
+
+    @Test
+    public void sortTest() {
+        MyLinkedList<Integer> list = new MyLinkedList<>();
+        list.add(3);
+        list.add(1);
+        list.add(2);
+        MyLinkedList.sort(list);
+        Integer[] array = list.toArray(new Integer[0]);
+        for (int i= 0; i<array.length-1; i++) {
+            Assert.assertTrue(array[i] <= array[i+1]);
+        }
+    }
 }

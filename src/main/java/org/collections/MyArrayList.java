@@ -1,5 +1,6 @@
 package org.collections;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class MyArrayList<E> implements Collection<E>{
@@ -64,12 +65,19 @@ public class MyArrayList<E> implements Collection<E>{
 
     @Override
     public Object[] toArray() {
-        return Arrays.copyOf(elements, size);
+        return toArray(new Object[0]);
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        return (T[]) toArray();
+        if (a.length < size) {
+            a = (T[]) Array.newInstance(a.getClass().getComponentType(), size);
+        }
+        System.arraycopy(elements, 0, a, 0, size);
+        if (a.length > size) {
+            a[size] = null;
+        }
+        return a;
     }
 
 

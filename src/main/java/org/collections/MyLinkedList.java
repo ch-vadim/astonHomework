@@ -1,5 +1,6 @@
 package org.collections;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class MyLinkedList<E> implements Deque<E> {
@@ -279,20 +280,25 @@ public class MyLinkedList<E> implements Deque<E> {
 
     @Override
     public Object[] toArray() {
-        Object[] array = new Object[size];
-        int index = 0;
-        Node<E> node = first;
-        while (node!=null) {
-            array[index] = node.value;
-            index++;
-            node = node.next;
-        }
-        return array;
+        return toArray(new Object[0]);
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        return (T[]) toArray();
+        if (a.length < size) {
+            a = (T[]) Array.newInstance(a.getClass().getComponentType(), size);
+        }
+        int index = 0;
+        Node<E> node = first;
+        while (node != null) {
+            a[index] = (T) node.value;
+            index++;
+            node = node.next;
+        }
+        if (a.length > size) {
+            a[size] = null;
+        }
+        return a;
     }
 
 
@@ -344,6 +350,10 @@ public class MyLinkedList<E> implements Deque<E> {
                     flag = true;
                 }
             }
+        }
+        clear();
+        for(E el: elements) {
+            this.addLast(el);
         }
     }
 
