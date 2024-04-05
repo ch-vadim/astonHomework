@@ -97,8 +97,8 @@ public class PuttingIntoPractice {
          */
 
         Transaction transactionWithMinValue = transactions.stream()
-                .reduce((o1, o2) -> o1.getValue()< o2.getValue() ? o1 : o2)
-                .get();
+                .min(Comparator.comparingInt(Transaction::getValue))
+                .orElse(null);
         System.out.println(transactionWithMinValue);
     }
 }
